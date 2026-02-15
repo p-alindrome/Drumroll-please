@@ -1,203 +1,431 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>🥁 Drumroll, Please</title>
+    <meta charset="UTF-8"/>
+    <title>🥁 Drumroll, Please</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: system-ui, sans-serif;
+            background: radial-gradient(circle at top, #e0c3fc, #8ec5fc);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      background: radial-gradient(circle at top, #ffecd2, #fcb69f);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      color: #2d2d2d;
-      padding: 24px;
-    }
+        .app {
+            background: white;
+            border-radius: 22px;
+            padding: 30px;
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+        }
 
-    .app {
-      background: white;
-      border-radius: 20px;
-      padding: 32px;
-      max-width: 420px;
-      width: 100%;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.15);
-    }
+        h1 {
+            margin: 0;
+            font-size: 2.4rem;
+        }
 
-    h1 {
-      margin: 0 0 8px;
-      font-size: 2.4rem;
-    }
+        .subtitle {
+            opacity: 0.7;
+            margin: 8px 0 20px;
+        }
 
-    .subtitle {
-      font-size: 1rem;
-      opacity: 0.75;
-      margin-bottom: 24px;
-    }
+        .row {
+            display: flex;
+            gap: 8px;
+        }
 
-    .input-row {
-      display: flex;
-      gap: 8px;
-    }
+        input {
+            flex: 1;
+            padding: 12px;
+            border-radius: 12px;
+            border: 2px solid #eee;
+            font-size: 16px;
+        }
 
-    input {
-      flex: 1;
-      padding: 12px 14px;
-      border-radius: 12px;
-      border: 2px solid #eee;
-      font-size: 16px;
-    }
+        button {
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: none;
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+            background: #9b5de5;
+            box-shadow: 0 6px 0 #7a3fd2;
+        }
 
-    button {
-      padding: 12px 18px;
-      border-radius: 12px;
-      border: none;
-      background: #ff7a18;
-      color: white;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: transform 0.1s ease, box-shadow 0.1s ease;
-      box-shadow: 0 6px 0 #e76610;
-    }
+        button:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #e76610;
+        }
 
-    button:active {
-      transform: translateY(4px);
-      box-shadow: 0 2px 0 #e76610;
-    }
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 18px 0 10px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 10px;
+        }
 
-    ul {
-      list-style: none;
-      padding: 0;
-      margin: 20px 0 10px;
-    }
+        li {
+            font-size: 18px;
+            padding: 4px 0;
+            background: #eee;
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
 
-    li {
-      padding: 6px 0;
-      font-size: 18px;
-    }
+        li:hover {
+            transform: scale(1.05);
+            background: #ddd;
+        }
 
-    .drumroll-btn {
-      margin-top: 20px;
-      width: 100%;
-      font-size: 18px;
-    }
+        .controls {
+            display: flex;
+            justify-content: center;
+            margin: 10px 0;
+            font-size: 14px;
+        }
 
-    .stage {
-      min-height: 90px;
-      margin-top: 24px;
-      font-size: 28px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+        .controls label {
+            cursor: pointer;
+        }
 
-    .rolling {
-      animation: pulse 0.8s infinite;
-      opacity: 0.85;
-    }
+        .drumroll {
+            width: 100%;
+            margin-top: 16px;
+            font-size: 18px;
+        }
 
-    .winner {
-      font-size: 34px;
-      animation: pop 0.6s ease;
-    }
+        .clear-all {
+            background: #ff4ed1; /* bright pinkish-purple for attention */
+            color: white;
+            font-weight: 700;
+            border-radius: 12px;
+            border: none;
+            padding: 10px 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 6px 0 #c71585; /* darker shadow */
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
 
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
-    }
+        .clear-all-floating {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 10;
+        }
 
-    @keyframes pop {
-      0% { transform: scale(0.6); opacity: 0; }
-      100% { transform: scale(1); opacity: 1; }
-    }
-  </style>
+        .clear-all:hover {
+            background: #ff7bff;
+            box-shadow: 0 6px 0 #c71585;
+            transform: translateY(-2px);
+        }
+
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 0 #7a3fd2; /* main button shadow */
+        }
+
+        .stage {
+            min-height: 90px;
+            margin-top: 24px;
+            font-size: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .rolling {
+            animation: pulse 0.8s infinite;
+        }
+
+        .winner {
+            font-size: 36px;
+            animation: pop 0.6s ease;
+        }
+
+        canvas {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+        }
+
+        @keyframes pulse {
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes pop {
+            from {
+                transform: scale(0.6);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
 </head>
 <body>
 
-  <div class="app">
+<div class="app">
     <h1>🥁 Drumroll, Please</h1>
-    <div class="subtitle">
-      Add anything. We’ll make a whole production out of choosing it.
-    </div>
+    <div class="subtitle">Every decision deserves drama.</div>
 
-    <div class="input-row">
-      <input id="itemInput" placeholder="Add a person, task, or idea…" />
-      <button onclick="addItem()">Add</button>
+    <div class="row">
+        <input id="input" placeholder="Add a person, task, or idea…"/>
+        <button onclick="addItem()">Add</button>
     </div>
-
+    <div class="controls">
+        <button class="clear-all" onclick="clearAll()">🧹 Clear All</button>
+    </div>
     <ul id="list"></ul>
 
-    <button class="drumroll-btn" onclick="startDrumroll()">
-      Start the Drumroll
-    </button>
+    <div class="controls">
+        <label>
+            <input type="checkbox" id="removeAfter"/>
+            Remove after pick
+        </label>
+    </div>
+
+    <button class="drumroll" onclick="start()">Start the Drumroll</button>
 
     <div class="stage" id="stage"></div>
-  </div>
+</div>
 
-  <script>
-    const items = [];
-    const list = document.getElementById("list");
+<canvas id="confetti"></canvas>
+
+<script>
+    const input = document.getElementById("input");
+    const listEl = document.getElementById("list");
     const stage = document.getElementById("stage");
+    const removeAfter = document.getElementById("removeAfter");
+    const canvas = document.getElementById("confetti");
+    const ctx = canvas.getContext("2d");
+
+    let items = JSON.parse(localStorage.getItem("drumroll-items")) || [];
+    render();
+
+    function save() {
+        localStorage.setItem("drumroll-items", JSON.stringify(items));
+    }
 
     function addItem() {
-      const input = document.getElementById("itemInput");
-      const value = input.value.trim();
-      if (!value) return;
-
-      items.push(value);
-      input.value = "";
-      render();
+        const v = input.value.trim();
+        if (!v) return;
+        items.push(v);
+        input.value = "";
+        save();
+        render();
     }
 
     function render() {
-      list.innerHTML = "";
-      items.forEach(item => {
-        const li = document.createElement("li");
-        li.textContent = "• " + item;
-        list.appendChild(li);
-      });
+        listEl.innerHTML = "";
+        items.forEach(i => {
+            const li = document.createElement("li");
+            li.textContent = "• " + i;
+            listEl.appendChild(li);
+        });
     }
 
-    function startDrumroll() {
-      if (items.length === 0) {
-        stage.textContent = "Even drama needs options 😅";
-        return;
-      }
+    function playDrumroll() {
+        const audioCtx = new AudioContext();
+        let t = audioCtx.currentTime;
 
-      const suspenseLines = [
-        "wait for it…",
-        "this is a big moment…",
-        "hold your applause…",
-        "consulting the universe…"
-      ];
+        const beats = 12;
+        const gap = 0.18;
 
-      let i = 0;
-      stage.className = "stage rolling";
+        for (let i = 0; i < beats; i++) {
+            const osc = audioCtx.createOscillator();
+            osc.frequency.value = 90;
+            osc.connect(audioCtx.destination);
+            osc.start(t);
+            osc.stop(t + 0.05);
+            t += gap;
+        }
 
-      const roll = setInterval(() => {
-        stage.textContent =
-          suspenseLines[i % suspenseLines.length];
-        i++;
-      }, 500);
-
-      setTimeout(() => {
-        clearInterval(roll);
-        const winner =
-          items[Math.floor(Math.random() * items.length)];
-        stage.className = "stage winner";
-        stage.textContent = `🥁 ${winner} 🥁`;
-      }, 3000);
+        // return total duration in ms
+        return beats * gap * 1000;
     }
-  </script>
+
+
+    function start() {
+        if (!items.length) {
+            stage.textContent = "Even drama needs options 😅";
+            return;
+        }
+
+        const drumrollDuration = playDrumroll();
+        stage.className = "stage rolling";
+
+        const lines = [
+            "wait for it…",
+            "big moment…",
+            "hold applause…",
+            "consulting the universe…"
+        ];
+
+        let i = 0;
+        const roll = setInterval(() => {
+            stage.textContent = lines[i++ % lines.length];
+        }, 500);
+
+        setTimeout(() => {
+            clearInterval(roll);
+
+            const index = Math.floor(Math.random() * items.length);
+            const winner = items[index];
+
+            stage.className = "stage winner";
+            stage.textContent = `🥁 ${winner} 🥁`;
+
+            confetti(2000); // confetti runs AFTER music
+
+            if (removeAfter.checked) {
+                items.splice(index, 1);
+                save();
+                render();
+            }
+        }, drumrollDuration + 300);
+
+    }
+
+    function confetti(duration = 1500) {
+        canvas.width = innerWidth;
+        canvas.height = innerHeight;
+
+        const pieces = Array.from({length: 150}, () => ({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            r: Math.random() * 6 + 2,
+            d: Math.random() * 5 + 2,
+            h: Math.random() * 360
+        }));
+
+        const start = performance.now();
+
+        function draw(time) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            pieces.forEach(p => {
+                ctx.fillStyle = `hsl(${p.h},100%,50%)`;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y += p.d, p.r, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            if (time - start < duration) {
+                requestAnimationFrame(draw);
+            }
+        }
+
+        requestAnimationFrame(draw);
+    }
+
+    function clearAll() {
+        if (!items.length) return;
+
+        const confirmClear = confirm("Are you sure you want to clear all items?");
+        if (!confirmClear) return;
+
+        const listItems = document.querySelectorAll("#list li");
+        const stageEl = document.getElementById("stage");
+
+        // Animate list items
+        listItems.forEach(li => animateTextPoof(li));
+
+        // Animate stage text
+        if (stageEl.textContent.trim()) {
+            animateTextPoof(stageEl);
+        }
+
+        // Clear items & localStorage after animation
+        setTimeout(() => {
+            items = [];
+            save();
+        }, 800);
+    }
+
+    // Function to animate a single element with poof blur + tiny particles
+    function animateTextPoof(el) {
+        const rect = el.getBoundingClientRect();
+        const computedStyle = getComputedStyle(el);
+        const color = computedStyle.color;
+
+        // Create particles
+        const particleCount = 20;
+        const particles = [];
+        for (let i = 0; i < particleCount; i++) {
+            particles.push({
+                x: rect.left + rect.width / 2,
+                y: rect.top + rect.height / 2,
+                dx: (Math.random() - 0.5) * 8,
+                dy: (Math.random() - 0.5) * 8,
+                r: Math.random() * 3 + 2,
+                alpha: 1,
+                color
+            });
+        }
+
+        // Blur + fade out the element itself
+        el.style.transition = "all 0.8s ease";
+        el.style.filter = "blur(6px)";
+        el.style.opacity = "0";
+        el.style.transform = "scale(0.5)";
+
+        setTimeout(() => el.remove(), 800);
+
+        // Animate particles on canvas
+        const canvas = document.getElementById("confetti");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        const ctx = canvas.getContext("2d");
+        let frame = 0;
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            particles.forEach(p => {
+                p.x += p.dx;
+                p.y += p.dy;
+                p.alpha -= 0.02;
+                if (p.alpha > 0) {
+                    ctx.fillStyle = `rgba(${colorToRGB(p.color)}, ${p.alpha})`;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            });
+
+            frame++;
+            if (frame < 50) requestAnimationFrame(draw);
+            else ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        draw();
+    }
+
+    // Helper: converts CSS color string like "rgb(45, 45, 45)" to array [45,45,45]
+    function colorToRGB(str) {
+        const match = str.match(/\d+/g);
+        if (match) return `${match[0]},${match[1]},${match[2]}`;
+        return "0,0,0";
+    }
+
+
+</script>
 
 </body>
 </html>
