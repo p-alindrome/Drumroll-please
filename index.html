@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>🥁 Drumroll, Please</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: radial-gradient(circle at top, #ffecd2, #fcb69f);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #2d2d2d;
+      padding: 24px;
+    }
+
+    .app {
+      background: white;
+      border-radius: 20px;
+      padding: 32px;
+      max-width: 420px;
+      width: 100%;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 2.4rem;
+    }
+
+    .subtitle {
+      font-size: 1rem;
+      opacity: 0.75;
+      margin-bottom: 24px;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    input {
+      flex: 1;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 2px solid #eee;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 12px 18px;
+      border-radius: 12px;
+      border: none;
+      background: #ff7a18;
+      color: white;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.1s ease, box-shadow 0.1s ease;
+      box-shadow: 0 6px 0 #e76610;
+    }
+
+    button:active {
+      transform: translateY(4px);
+      box-shadow: 0 2px 0 #e76610;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 20px 0 10px;
+    }
+
+    li {
+      padding: 6px 0;
+      font-size: 18px;
+    }
+
+    .drumroll-btn {
+      margin-top: 20px;
+      width: 100%;
+      font-size: 18px;
+    }
+
+    .stage {
+      min-height: 90px;
+      margin-top: 24px;
+      font-size: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .rolling {
+      animation: pulse 0.8s infinite;
+      opacity: 0.85;
+    }
+
+    .winner {
+      font-size: 34px;
+      animation: pop 0.6s ease;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes pop {
+      0% { transform: scale(0.6); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app">
+    <h1>🥁 Drumroll, Please</h1>
+    <div class="subtitle">
+      Add anything. We’ll make a whole production out of choosing it.
+    </div>
+
+    <div class="input-row">
+      <input id="itemInput" placeholder="Add a person, task, or idea…" />
+      <button onclick="addItem()">Add</button>
+    </div>
+
+    <ul id="list"></ul>
+
+    <button class="drumroll-btn" onclick="startDrumroll()">
+      Start the Drumroll
+    </button>
+
+    <div class="stage" id="stage"></div>
+  </div>
+
+  <script>
+    const items = [];
+    const list = document.getElementById("list");
+    const stage = document.getElementById("stage");
+
+    function addItem() {
+      const input = document.getElementById("itemInput");
+      const value = input.value.trim();
+      if (!value) return;
+
+      items.push(value);
+      input.value = "";
+      render();
+    }
+
+    function render() {
+      list.innerHTML = "";
+      items.forEach(item => {
+        const li = document.createElement("li");
+        li.textContent = "• " + item;
+        list.appendChild(li);
+      });
+    }
+
+    function startDrumroll() {
+      if (items.length === 0) {
+        stage.textContent = "Even drama needs options 😅";
+        return;
+      }
+
+      const suspenseLines = [
+        "wait for it…",
+        "this is a big moment…",
+        "hold your applause…",
+        "consulting the universe…"
+      ];
+
+      let i = 0;
+      stage.className = "stage rolling";
+
+      const roll = setInterval(() => {
+        stage.textContent =
+          suspenseLines[i % suspenseLines.length];
+        i++;
+      }, 500);
+
+      setTimeout(() => {
+        clearInterval(roll);
+        const winner =
+          items[Math.floor(Math.random() * items.length)];
+        stage.className = "stage winner";
+        stage.textContent = `🥁 ${winner} 🥁`;
+      }, 3000);
+    }
+  </script>
+
+</body>
+</html>
