@@ -15,7 +15,7 @@ Perfect for:
 
 Check out the live version here:
 
-👉 [https://p‑alin­drome.github.io/Drumroll‑please/](https://p‑alin­drome.github.io/Drumroll‑please/)
+👉 https://p-alindrome.github.io/Drumroll-please/
 
 This demo shows the full **Drumroll, Please** experience — add items, clear with fun animations, and pick a dramatic winner with confetti!
 
